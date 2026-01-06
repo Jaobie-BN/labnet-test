@@ -1,0 +1,45 @@
+@theme {
+  /* Surface Colors */
+  --color-bg-app: #f1f5f9; /* Slate-100 (Light Mode Default) */
+  --color-bg-surface: #ffffff; /* White */
+  --color-bg-surface-hover: #f1f5f9; /* Slate-100 */
+
+  /* Text Colors */
+  --color-text-primary: #0f172a; /* Slate-950 */
+  --color-text-secondary: #475569; /* Slate-600 */
+  --color-text-muted: #64748b; /* Slate-500 */
+
+  /* Border Colors */
+  --color-border-subtle: #e2e8f0; /* Slate-200 */
+  --color-border-highlight: #cbd5e1; /* Slate-300 */
+
+  /* Brand/Accent Colors (Default: Indigo & Orange) */
+  --color-brand-primary: #6366f1; /* Indigo-500 */
+  --color-brand-primary-hover: #4f46e5; /* Indigo-600 */
+  --color-brand-secondary: #ff3aab; /* Orange-500 */
+
+  /* Status Colors */
+  --color-status-success: #10b981; /* Emerald-500 */
+  --color-status-error: #ef4444; /* Red-500 */
+  --color-status-warning: #f59e0b; /* Amber-500 */
+}
+
+/* Dark Mode Overrides */
+.dark {
+  /* Surface Colors */
+  --color-bg-app: #0f172a; /* Slate-950 */
+  --color-bg-surface: #1e293b; /* Slate-900 */
+  --color-bg-surface-hover: #334155; /* Slate-700 */
+
+  /* Text Colors */
+  --color-text-primary: #e2e8f0; /* Slate-200 */
+  --color-text-secondary: #94a3b8; /* Slate-400 */
+  --color-text-muted: #64748b; /* Slate-500 */
+
+  /* Border Colors */
+  --color-border-subtle: rgba(255, 255, 255, 0.1);
+  --color-border-highlight: rgba(255, 255, 255, 0.2);
+
+  /* Brand/Accent Colors remain mostly same but can tweak if needed */
+  --color-brand-secondary: #ff3aab; /* Orange-500 equivalent in original dark theme was pinkish? Keeping consistent with request for light mode default but ensuring contrast */
+}
