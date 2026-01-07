@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { login } from '../services/auth.service';
-import { Server, Lock, User as UserIcon, ArrowRight, Network } from 'lucide-react';
+import { Server, Lock, User as UserIcon, ArrowRight, Network, Eye, EyeOff } from 'lucide-react';
 
 interface LoginProps {
   onLogin: () => void;
@@ -11,6 +11,7 @@ const Login = ({ onLogin }: LoginProps) => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,7 +53,7 @@ const Login = ({ onLogin }: LoginProps) => {
           </div>
 
           {error && (
-            <div className="bg-status-error/10 border border-status-error/20 rounded-lg p-3 mb-6 text-red-200 text-sm text-center animate-shake">
+            <div className="bg-status-error/10 border border-status-error/20 rounded-lg p-3 mb-6 text-status-error text-sm text-center animate-shake">
               {error}
             </div>
           )}
@@ -69,6 +70,7 @@ const Login = ({ onLogin }: LoginProps) => {
                 <input
                   type="email"
                   id="email"
+                  autoComplete="email"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-bg-app border border-border-subtle text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-secondary/50 focus:border-brand-secondary/50 transition duration-200"
                   placeholder="student@kmitl.ac.th"
                   value={email}
@@ -88,15 +90,28 @@ const Login = ({ onLogin }: LoginProps) => {
                   <Lock className="h-5 w-5 text-text-muted group-focus-within:text-brand-secondary transition-colors" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-bg-app border border-border-subtle text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-secondary/50 focus:border-brand-secondary/50 transition duration-200"
+                  autoComplete="current-password"
+                  className="w-full pl-10 pr-12 py-3 rounded-xl bg-bg-app border border-border-subtle text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand-secondary/50 focus:border-brand-secondary/50 transition duration-200"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-text-muted hover:text-text-primary transition-colors"
+                  tabIndex={-1}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
               </div>
             </div>
 

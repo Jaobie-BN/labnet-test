@@ -5,25 +5,30 @@ import Dashboard from './pages/Dashboard';
 import LabUsage from './pages/LabUsage';
 import type { User } from './types';
 import { ThemeProvider } from './context/ThemeContext';
+import { getCurrentUser, logout } from './services/auth.service';
 
 function AppContent() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  // Lazy initialization to check storage immediately
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const token = localStorage.getItem('token');
+    const user = getCurrentUser();
+    return !!token && !!user;
+  });
+  const [user, setUser] = useState<User | null>(() => getCurrentUser());
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    setIsAuthenticated(true);
-    // In a real app, user data comes from the auth response
-    setUser({
-      id: '1',
-      email: 'student@kmitl.ac.th',
-      name: 'Student User',
-      role: 'student'
-    });
-    navigate('/');
+    // Reload state from storage after successful login
+    const storedUser = getCurrentUser();
+    if (storedUser) {
+      setUser(storedUser);
+      setIsAuthenticated(true);
+      navigate('/');
+    }
   };
 
   const handleLogout = () => {
+    logout();
     setIsAuthenticated(false);
     setUser(null);
     navigate('/login');

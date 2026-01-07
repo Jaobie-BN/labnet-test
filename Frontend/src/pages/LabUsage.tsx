@@ -12,7 +12,7 @@ import {
   Router,
   Terminal as TerminalIcon
 } from 'lucide-react';
-import type { Device } from '../types';
+import type { Device, Lab } from '../types';
 import { getLabById } from '../services/labService';
 import Terminal from '../components/Terminal';
 import PCConfiguration from '../components/PCConfiguration';
@@ -22,17 +22,32 @@ const LabUsage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
-  
-  const lab = getLabById(id || '');
+  const [lab, setLab] = useState<Lab | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Effect to validate lab existence or handle invalid ID
   useEffect(() => {
-    if (!lab && id) {
-        // Option 1: Redirect to dashboard
-        // navigate('/', { replace: true });
-        // Option 2: Just show error state (implemented below)
-    }
-  }, [lab, id, navigate]);
+    const fetchLab = async () => {
+      try {
+        if (id) {
+          const labData = await getLabById(id);
+          setLab(labData || null);
+        }
+      } catch (error) {
+        console.error('Failed to fetch lab:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLab();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-bg-app text-text-primary">
+        <div className="animate-spin w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
 
   if (!lab) {
       return (
@@ -161,16 +176,18 @@ const LabUsage = () => {
                      <TerminalIcon className="w-4 h-4" />
                      <span>Terminal: <span className="text-text-primary font-mono">{selectedDevice.name}</span></span>
                      {selectedDevice.connectedUsers && selectedDevice.connectedUsers.length > 0 && (
-                        <div className="flex items-center gap-2 ml-4 px-3 py-1 bg-bg-surface rounded-full border border-border-highlight">
+                        <div className="flex items-center gap-2 ml-4">
                            <span className="text-xs text-text-secondary">Also viewing:</span>
-                           <div className="flex -space-x-2">
+                           <div className="flex items-center gap-2">
                               {selectedDevice.connectedUsers.map((user) => (
                                  <div
                                     key={user.id}
-                                    className="w-5 h-5 rounded-full bg-brand-primary border border-bg-surface flex items-center justify-center text-[10px] text-white font-bold title"
-                                    title={user.name}
+                                    className="flex items-center gap-2 px-2 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20"
                                  >
-                                    {user.name.charAt(0)}
+                                    <div className="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-[8px] text-white font-bold">
+                                       {user.name.charAt(0)}
+                                    </div>
+                                    <span className="text-xs text-brand-primary font-medium">{user.name}</span>
                                  </div>
                               ))}
                            </div>

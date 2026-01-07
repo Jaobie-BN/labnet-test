@@ -50,12 +50,12 @@ export default function PCConfiguration({ device }: PCConfigurationProps) {
       <div className="w-full max-w-md bg-bg-surface border border-border-subtle rounded-2xl shadow-xl overflow-hidden">
         
         {/* Header */}
-        <div className="p-6 border-b border-border-subtle bg-white/5 flex items-center gap-4">
+        <div className="p-6 border-b border-border-subtle bg-bg-surface-hover flex items-center gap-4">
           <div className="p-3 bg-brand-primary/20 rounded-xl">
             <Monitor className="w-6 h-6 text-brand-primary" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white tracking-tight">{device.name} Configuration</h2>
+            <h2 className="text-xl font-bold text-text-primary tracking-tight">{device.name} Configuration</h2>
             <p className="text-sm text-text-secondary">Network Interface Settings</p>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function PCConfiguration({ device }: PCConfigurationProps) {
                 placeholder="e.g. 192.168.1.10"
                 value={config.ip}
                 onChange={(e) => handleChange('ip', e.target.value)}
-                className="w-full bg-black/20 border border-border-subtle rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all font-mono placeholder:text-text-muted"
+                className="w-full bg-bg-app border border-border-subtle rounded-lg px-4 py-2.5 text-text-primary focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all font-mono placeholder:text-text-muted"
               />
             </div>
 
@@ -82,7 +82,7 @@ export default function PCConfiguration({ device }: PCConfigurationProps) {
                 placeholder="e.g. 255.255.255.0"
                 value={config.subnet}
                 onChange={(e) => handleChange('subnet', e.target.value)}
-                className="w-full bg-black/20 border border-border-subtle rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all font-mono placeholder:text-text-muted"
+                className="w-full bg-bg-app border border-border-subtle rounded-lg px-4 py-2.5 text-text-primary focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all font-mono placeholder:text-text-muted"
               />
             </div>
 
@@ -93,7 +93,7 @@ export default function PCConfiguration({ device }: PCConfigurationProps) {
                 placeholder="e.g. 192.168.1.1"
                 value={config.gateway}
                 onChange={(e) => handleChange('gateway', e.target.value)}
-                className="w-full bg-black/20 border border-border-subtle rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all font-mono placeholder:text-text-muted"
+                className="w-full bg-bg-app border border-border-subtle rounded-lg px-4 py-2.5 text-text-primary focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all font-mono placeholder:text-text-muted"
               />
             </div>
           </div>

@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./Backend
+    container_name: networklab-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    volumes:
+      - ./Backend/data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build: ./Frontend
+    container_name: networklab-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

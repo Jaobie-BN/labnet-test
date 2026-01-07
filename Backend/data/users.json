@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "email": "admin@kmitl.ac.th",
+    "password": "adminpassword",
+    "name": "Admin User",
+    "role": "admin"
+  },
+  {
+    "id": "2",
+    "email": "student@kmitl.ac.th",
+    "password": "password123",
+    "name": "Student User",
+    "role": "student"
+  }
+]

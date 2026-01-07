@@ -1,11 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Users, 
   Activity, 
-  Server, 
-  Wifi, 
+  Server,  
   LogOut, 
   FileText, 
   LayoutDashboard,
@@ -26,19 +25,43 @@ interface DashboardProps {
 
 const Dashboard = ({ user, onLogout }: DashboardProps) => {
   const navigate = useNavigate();
-  const [labs] = useState<Lab[]>(getAllLabs());
-  const [stats] = useState<SystemStats>(getSystemStats());
+  const [labs, setLabs] = useState<Lab[]>([]);
+  const [stats, setStats] = useState<SystemStats>({ activeUsers: 0, totalUsers: 0, availableLabs: 0, unavailableLabs: 0 });
+  const [loading, setLoading] = useState(true);
 
-  const StatusBadge = ({ status }: { status: 'AVAILABLE' | 'BUSY' }) => (
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [labsData, statsData] = await Promise.all([getAllLabs(), getSystemStats()]);
+        setLabs(labsData);
+        setStats(statsData);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const StatusBadge = ({ status }: { status: 'AVAILABLE' | 'UNAVAILABLE' }) => (
     <span className={`px-2 py-1 rounded-full text-xs font-semibold flex items-center gap-1.5 ${
       status === 'AVAILABLE' 
         ? 'bg-status-success/10 text-status-success border border-status-success/20' 
         : 'bg-status-warning/10 text-status-warning border border-status-warning/20'
     }`}>
       <span className={`w-1.5 h-1.5 rounded-full ${status === 'AVAILABLE' ? 'bg-status-success' : 'bg-status-warning'}`} />
-      {status}
+      {status === 'UNAVAILABLE' ? 'UNAVAILABLE' : status}
     </span>
   );
+
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-bg-app text-text-primary">
+        <div className="animate-spin w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-bg-app text-text-primary font-sans">
@@ -59,9 +82,7 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
               <a href="#" className="flex items-center gap-2 text-text-primary font-medium hover:text-brand-secondary transition-colors">
                 <LayoutDashboard className="w-4 h-4" /> Dashboard
               </a>
-              <a href="#" className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
-                <Wifi className="w-4 h-4" /> Lab Access
-              </a>
+
               <a href="#" className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
                 <FileText className="w-4 h-4" /> Documents
               </a>
@@ -92,7 +113,7 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
             { label: 'Active Users', value: stats.activeUsers, icon: Activity, color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
             { label: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
             { label: 'Available Labs', value: stats.availableLabs, icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-            { label: 'Busy Devices', value: stats.busyLabs, icon: AlertCircle, color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
+            { label: 'Unavailable Labs', value: stats.unavailableLabs, icon: AlertCircle, color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
           ].map((stat, i) => (
             <div key={i} className={`p-4 rounded-xl border ${stat.border} ${stat.bg} backdrop-blur-sm relative overflow-hidden group`}>
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110">
@@ -106,7 +127,7 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
 
         {/* Lab Sets */}
         <div className="space-y-8">
-          {[1, 2].map((setNum) => (
+          {[1].map((setNum) => (
             <div key={setNum}>
               <div className="flex items-center gap-3 mb-4">
                 <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
@@ -136,10 +157,10 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
                           <span className="text-xs font-mono text-text-secondary">{device.name}</span>
                           <span className="ml-auto">
                             {device.type === 'ROUTER' 
-                              ? <Router className="w-3 h-3 text-gray-600" /> 
+                              ? <Router className="w-3 h-3 text-text-secondary" /> 
                               : device.type === 'SWITCH' 
-                                ? <ArrowRightLeft className="w-3 h-3 text-gray-600" />
-                                : <Monitor className="w-3 h-3 text-gray-600" />
+                                ? <ArrowRightLeft className="w-3 h-3 text-text-secondary" />
+                                : <Monitor className="w-3 h-3 text-text-secondary" />
                             }
                           </span>
                         </div>
@@ -148,14 +169,13 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
 
                     <button
                       onClick={() => navigate(`/lab/${lab.id}`)}
-                      disabled={lab.status !== 'AVAILABLE'}
                       className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
                         lab.status === 'AVAILABLE'
                           ? 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-lg shadow-indigo-900/20'
-                          : 'bg-bg-surface/50 text-text-muted cursor-not-allowed'
+                          : 'bg-status-warning/10 hover:bg-status-warning/20 text-status-warning border border-status-warning/20'
                       }`}
                     >
-                      {lab.status === 'AVAILABLE' ? 'Access Lab Environment' : 'Currently In Use'}
+                      Access Lab Environment
                     </button>
                   </div>
                 ))}

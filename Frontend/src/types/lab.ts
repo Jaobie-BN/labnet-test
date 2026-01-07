@@ -1,7 +1,7 @@
 import type { User } from './auth';
 
 export type DeviceType = 'ROUTER' | 'SWITCH' | 'PC';
-export type DeviceStatus = 'AVAILABLE' | 'BUSY';
+export type DeviceStatus = 'AVAILABLE' | 'UNAVAILABLE';
 
 export interface Device {
   id: string;
@@ -15,6 +15,6 @@ export interface Lab {
   id: string;
   name: string; // e.g., Set 1 - Lab 01
   set: number; // 1 or 2
-  status: 'AVAILABLE' | 'BUSY';
+  status: 'AVAILABLE' | 'UNAVAILABLE';
   devices: Device[];
 }

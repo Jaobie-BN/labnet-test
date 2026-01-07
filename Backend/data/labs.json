@@ -1,0 +1,66 @@
+[
+  {
+    "id": "lab-01",
+    "name": "Lab 01",
+    "set": 1,
+    "status": "AVAILABLE",
+    "devices": [
+      {
+        "id": "1-r1",
+        "name": "R1",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "connectedUsers": [
+          { "id": "2", "name": "John Doe", "email": "john@example.com" },
+          { "id": "3", "name": "Jane Smith", "email": "jane@example.com" }
+        ]
+      },
+      { "id": "1-r2", "name": "R2", "type": "ROUTER", "status": "AVAILABLE" },
+      {
+        "id": "1-sw1",
+        "name": "SW1",
+        "type": "SWITCH",
+        "status": "AVAILABLE",
+        "connectedUsers": [
+          { "id": "4", "name": "Bob Wilson", "email": "bob@example.com" }
+        ]
+      },
+      { "id": "1-sw2", "name": "SW2", "type": "SWITCH", "status": "AVAILABLE" },
+      { "id": "1-pc1", "name": "PC1", "type": "PC", "status": "AVAILABLE" },
+      { "id": "1-pc2", "name": "PC2", "type": "PC", "status": "AVAILABLE" }
+    ]
+  },
+  {
+    "id": "lab-02",
+    "name": "Lab 02",
+    "set": 1,
+    "status": "UNAVAILABLE",
+    "devices": [
+      { "id": "2-r1", "name": "R1", "type": "ROUTER", "status": "UNAVAILABLE" },
+      { "id": "2-r2", "name": "R2", "type": "ROUTER", "status": "UNAVAILABLE" },
+      {
+        "id": "2-sw1",
+        "name": "SW1",
+        "type": "SWITCH",
+        "status": "UNAVAILABLE"
+      },
+      { "id": "2-sw2", "name": "SW2", "type": "SWITCH", "status": "AVAILABLE" },
+      { "id": "2-pc1", "name": "PC1", "type": "PC", "status": "UNAVAILABLE" },
+      { "id": "2-pc2", "name": "PC2", "type": "PC", "status": "AVAILABLE" }
+    ]
+  },
+  {
+    "id": "lab-03",
+    "name": "Lab 03",
+    "set": 1,
+    "status": "AVAILABLE",
+    "devices": [
+      { "id": "3-r1", "name": "R1", "type": "ROUTER", "status": "AVAILABLE" },
+      { "id": "3-r2", "name": "R2", "type": "ROUTER", "status": "AVAILABLE" },
+      { "id": "3-sw1", "name": "SW1", "type": "SWITCH", "status": "AVAILABLE" },
+      { "id": "3-sw2", "name": "SW2", "type": "SWITCH", "status": "AVAILABLE" },
+      { "id": "3-pc1", "name": "PC1", "type": "PC", "status": "AVAILABLE" },
+      { "id": "3-pc2", "name": "PC2", "type": "PC", "status": "AVAILABLE" }
+    ]
+  }
+]
