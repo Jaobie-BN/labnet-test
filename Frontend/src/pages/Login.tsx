@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { login } from '../services/auth.service';
-import { Server, Lock, User as UserIcon, ArrowRight, Network, Eye, EyeOff } from 'lucide-react';
+import { Server, Lock, User as UserIcon, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 interface LoginProps {
   onLogin: () => void;
@@ -47,8 +47,6 @@ const Login = ({ onLogin }: LoginProps) => {
               Network<span className="text-brand-secondary">Lab</span> Access
             </h1>
             <div className="flex items-center justify-center gap-2 text-text-secondary text-sm">
-              <Network className="w-4 h-4" />
-              <span>Department of Computer Engineering</span>
             </div>
           </div>
 
