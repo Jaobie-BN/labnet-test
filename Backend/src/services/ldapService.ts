@@ -4,7 +4,7 @@ import path from 'path';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const LDAP_HOST = process.env.LDAP_HOST || '161.254.14.24';
+const LDAP_HOST = process.env.LDAP_HOST || '161.246.14.24';
 const LDAP_PORT = parseInt(process.env.LDAP_PORT || '389');
 const BASE_DN = process.env.LDAP_BASE_DN || 'dc=kmitl,dc=ac,dc=th';
 
