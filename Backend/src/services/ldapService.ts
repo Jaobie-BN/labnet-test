@@ -17,7 +17,8 @@ export const authenticateWithLdap = async (email: string, password: string): Pro
   const options = {
     ldapOpts: {
       url: `ldap://${LDAP_HOST}:${LDAP_PORT}`,
-      // connectTimeout: 5000,
+      connectTimeout: 10000,
+      timeout: 10000,
     },
     // We assume direct bind is possible or we construct the DN.
     // If we don't know the userDn structure, we might need a service account to search.
