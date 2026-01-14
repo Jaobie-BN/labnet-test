@@ -13,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/ldapjs": "^3.0.6",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^4.22.1",
-    "ldap-authentication": "^3.3.6"
+    "ldap-authentication": "^3.3.6",
+    "ldapjs": "^3.0.7"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
