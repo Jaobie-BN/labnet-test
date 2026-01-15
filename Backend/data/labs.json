@@ -1,66 +1,146 @@
 [
   {
-    "id": "lab-01",
-    "name": "Lab 01",
+    "id": "set-a",
+    "name": "Set A",
     "set": 1,
     "status": "AVAILABLE",
     "devices": [
       {
-        "id": "1-r1",
-        "name": "R1",
+        "id": "layer3",
+        "name": "Layer3",
         "type": "ROUTER",
         "status": "AVAILABLE",
-        "connectedUsers": [
-          { "id": "2", "name": "John Doe", "email": "john@example.com" },
-          { "id": "3", "name": "Jane Smith", "email": "jane@example.com" }
-        ]
+        "serialPort": "/dev/netlab_Layer3",
+        "baudRate": 9600
       },
-      { "id": "1-r2", "name": "R2", "type": "ROUTER", "status": "AVAILABLE" },
       {
-        "id": "1-sw1",
-        "name": "SW1",
+        "id": "router1-a",
+        "name": "Router1-A",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_router1-A",
+        "baudRate": 9600
+      },
+      {
+        "id": "router2-a",
+        "name": "Router2-A",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_router2-A",
+        "baudRate": 9600
+      },
+      {
+        "id": "switch1-a",
+        "name": "Switch1-A",
         "type": "SWITCH",
         "status": "AVAILABLE",
-        "connectedUsers": [
-          { "id": "4", "name": "Bob Wilson", "email": "bob@example.com" }
-        ]
+        "serialPort": "/dev/netlab_switch1-A",
+        "baudRate": 9600
       },
-      { "id": "1-sw2", "name": "SW2", "type": "SWITCH", "status": "AVAILABLE" },
-      { "id": "1-pc1", "name": "PC1", "type": "PC", "status": "AVAILABLE" },
-      { "id": "1-pc2", "name": "PC2", "type": "PC", "status": "AVAILABLE" }
-    ]
-  },
-  {
-    "id": "lab-02",
-    "name": "Lab 02",
-    "set": 1,
-    "status": "UNAVAILABLE",
-    "devices": [
-      { "id": "2-r1", "name": "R1", "type": "ROUTER", "status": "UNAVAILABLE" },
-      { "id": "2-r2", "name": "R2", "type": "ROUTER", "status": "UNAVAILABLE" },
       {
-        "id": "2-sw1",
-        "name": "SW1",
+        "id": "switch2-a",
+        "name": "Switch2-A",
         "type": "SWITCH",
-        "status": "UNAVAILABLE"
-      },
-      { "id": "2-sw2", "name": "SW2", "type": "SWITCH", "status": "AVAILABLE" },
-      { "id": "2-pc1", "name": "PC1", "type": "PC", "status": "UNAVAILABLE" },
-      { "id": "2-pc2", "name": "PC2", "type": "PC", "status": "AVAILABLE" }
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_switch2-A",
+        "baudRate": 9600
+      }
     ]
   },
   {
-    "id": "lab-03",
-    "name": "Lab 03",
-    "set": 1,
+    "id": "set-b",
+    "name": "Set B",
+    "set": 2,
     "status": "AVAILABLE",
     "devices": [
-      { "id": "3-r1", "name": "R1", "type": "ROUTER", "status": "AVAILABLE" },
-      { "id": "3-r2", "name": "R2", "type": "ROUTER", "status": "AVAILABLE" },
-      { "id": "3-sw1", "name": "SW1", "type": "SWITCH", "status": "AVAILABLE" },
-      { "id": "3-sw2", "name": "SW2", "type": "SWITCH", "status": "AVAILABLE" },
-      { "id": "3-pc1", "name": "PC1", "type": "PC", "status": "AVAILABLE" },
-      { "id": "3-pc2", "name": "PC2", "type": "PC", "status": "AVAILABLE" }
+      {
+        "id": "layer3-b",
+        "name": "Layer3",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_Layer3",
+        "baudRate": 9600
+      },
+      {
+        "id": "router1-b",
+        "name": "Router1-B",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_router1-B",
+        "baudRate": 9600
+      },
+      {
+        "id": "router2-b",
+        "name": "Router2-B",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_router2-B",
+        "baudRate": 9600
+      },
+      {
+        "id": "switch1-b",
+        "name": "Switch1-B",
+        "type": "SWITCH",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_switch1-B",
+        "baudRate": 9600
+      },
+      {
+        "id": "switch2-b",
+        "name": "Switch2-B",
+        "type": "SWITCH",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_switch2-B",
+        "baudRate": 9600
+      }
+    ]
+  },
+  {
+    "id": "set-c",
+    "name": "Set C",
+    "set": 3,
+    "status": "AVAILABLE",
+    "devices": [
+      {
+        "id": "layer3-c",
+        "name": "Layer3",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_Layer3",
+        "baudRate": 9600
+      },
+      {
+        "id": "router1-c",
+        "name": "Router1-C",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_router1-C",
+        "baudRate": 9600
+      },
+      {
+        "id": "router2-c",
+        "name": "Router2-C",
+        "type": "ROUTER",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_router2-C",
+        "baudRate": 9600
+      },
+      {
+        "id": "switch1-c",
+        "name": "Switch1-C",
+        "type": "SWITCH",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_switch1-C",
+        "baudRate": 9600
+      },
+      {
+        "id": "switch2-c",
+        "name": "Switch2-C",
+        "type": "SWITCH",
+        "status": "AVAILABLE",
+        "serialPort": "/dev/netlab_switch2-C",
+        "baudRate": 9600
+      }
     ]
   }
 ]

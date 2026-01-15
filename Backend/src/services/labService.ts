@@ -8,6 +8,8 @@ export interface Device {
   type: 'ROUTER' | 'SWITCH' | 'PC';
   status: 'AVAILABLE' | 'UNAVAILABLE';
   connectedUsers?: { id: string; name: string; email: string }[];
+  serialPort?: string;
+  baudRate?: number;
 }
 
 export interface Lab {
