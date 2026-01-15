@@ -61,7 +61,9 @@ export const authenticateWithLdap = async (email: string, password: string): Pro
                 res.on('searchEntry', (entry: SearchEntry) => {
                     userDn = entry.objectName || entry.dn.toString();
                     userObject = entry.pojo;
-                    // console.log("Found DN:", userDn);
+                    console.log("=== LDAP DEBUG ===");
+                    console.log("Found DN:", userDn);
+                    console.log("User Object:", JSON.stringify(userObject, null, 2));
                 });
 
                 res.on('error', (err) => {
@@ -89,6 +91,10 @@ export const authenticateWithLdap = async (email: string, password: string): Pro
                     authClient.bind(userDn, password, (err) => {
                         authClient.unbind();
                         if (err) {
+                            console.log("=== LDAP BIND ERROR ===");
+                            console.log("DN used:", userDn);
+                            console.log("Error code:", (err as any).code);
+                            console.log("Error message:", err.message);
                             return reject(new Error('Authentication failed (Bind Error)'));
                         }
                         
