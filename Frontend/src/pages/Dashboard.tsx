@@ -128,61 +128,59 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
 
         {/* Lab Sets */}
         <div className="space-y-8">
-          {[1].map((setNum) => (
-            <div key={setNum}>
-              <div className="flex items-center gap-3 mb-4">
-                <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
-                  <span className="w-1 h-6 bg-brand-secondary rounded-full" />
-                  Lab Set {setNum}
-                </h2>
-                <span className="text-sm text-text-muted bg-bg-surface px-3 py-1 rounded-full border border-bg-surface-hover">
-                  Devices: {setNum === 1 ? '01-03' : '04-06'}
-                </span>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {labs.filter(l => l.set === setNum).map(lab => (
-                  <div key={lab.id} className="bg-bg-surface border border-border-subtle rounded-xl p-5 hover:border-brand-secondary/30 transition-all duration-300 shadow-lg hover:shadow-orange-900/10 group">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="text-lg font-bold text-text-primary mb-1 group-hover:text-brand-secondary transition-colors">{lab.name}</h3>
-                        <p className="text-xs text-text-secondary font-mono">ID: {lab.id.toUpperCase()}</p>
-                      </div>
-                      <StatusBadge status={lab.status} />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2 mb-6">
-                      {lab.devices.map(device => (
-                        <div key={device.id} className="flex items-center gap-2 p-2 rounded-lg bg-bg-app border border-border-subtle">
-                          <div className={`w-2 h-2 rounded-full ${device.status === 'AVAILABLE' ? 'bg-status-success shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-status-warning'}`} />
-                          <span className="text-xs font-mono text-text-secondary">{device.name}</span>
-                          <span className="ml-auto">
-                            {device.type === 'ROUTER' 
-                              ? <Router className="w-3 h-3 text-text-secondary" /> 
-                              : device.type === 'SWITCH' 
-                                ? <ArrowRightLeft className="w-3 h-3 text-text-secondary" />
-                                : <Monitor className="w-3 h-3 text-text-secondary" />
-                            }
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => navigate(`/lab/${lab.id}`)}
-                      className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
-                        lab.status === 'AVAILABLE'
-                          ? 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-lg shadow-indigo-900/20'
-                          : 'bg-status-warning/10 hover:bg-status-warning/20 text-status-warning border border-status-warning/20'
-                      }`}
-                    >
-                      Access Lab Environment
-                    </button>
-                  </div>
-                ))}
-              </div>
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <h2 className="text-xl font-bold text-text-primary flex items-center gap-2">
+                <span className="w-1 h-6 bg-brand-secondary rounded-full" />
+                Available Labs
+              </h2>
+              <span className="text-sm text-text-muted bg-bg-surface px-3 py-1 rounded-full border border-bg-surface-hover">
+                {labs.length} Sets
+              </span>
             </div>
-          ))}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {labs.map(lab => (
+                <div key={lab.id} className="bg-bg-surface border border-border-subtle rounded-xl p-5 hover:border-brand-secondary/30 transition-all duration-300 shadow-lg hover:shadow-orange-900/10 group">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <h3 className="text-lg font-bold text-text-primary mb-1 group-hover:text-brand-secondary transition-colors">{lab.name}</h3>
+                      <p className="text-xs text-text-secondary font-mono">ID: {lab.id.toUpperCase()}</p>
+                    </div>
+                    <StatusBadge status={lab.status} />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 mb-6">
+                    {lab.devices.map(device => (
+                      <div key={device.id} className="flex items-center gap-2 p-2 rounded-lg bg-bg-app border border-border-subtle">
+                        <div className={`w-2 h-2 rounded-full ${device.status === 'AVAILABLE' ? 'bg-status-success shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-status-warning'}`} />
+                        <span className="text-xs font-mono text-text-secondary">{device.name}</span>
+                        <span className="ml-auto">
+                          {device.type === 'ROUTER' 
+                            ? <Router className="w-3 h-3 text-text-secondary" /> 
+                            : device.type === 'SWITCH' 
+                              ? <ArrowRightLeft className="w-3 h-3 text-text-secondary" />
+                              : <Monitor className="w-3 h-3 text-text-secondary" />
+                          }
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => navigate(`/lab/${lab.id}`)}
+                    className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
+                      lab.status === 'AVAILABLE'
+                        ? 'bg-brand-primary hover:bg-brand-primary-hover text-white shadow-lg shadow-indigo-900/20'
+                        : 'bg-status-warning/10 hover:bg-status-warning/20 text-status-warning border border-status-warning/20'
+                    }`}
+                  >
+                    Access Lab Environment
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </main>
     </div>
