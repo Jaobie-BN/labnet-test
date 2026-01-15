@@ -59,8 +59,9 @@ export const authenticateWithLdap = async (email: string, password: string): Pro
                 let userObject: any = null;
 
                 res.on('searchEntry', (entry: SearchEntry) => {
-                    userDn = entry.objectName || entry.dn.toString();
                     userObject = entry.pojo;
+                    // Use pojo.objectName which is the DN as a string
+                    userDn = userObject?.objectName || entry.dn?.toString() || null;
                     console.log("=== LDAP DEBUG ===");
                     console.log("Found DN:", userDn);
                     console.log("User Object:", JSON.stringify(userObject, null, 2));
