@@ -6,14 +6,6 @@
     "status": "AVAILABLE",
     "devices": [
       {
-        "id": "layer3",
-        "name": "Layer3",
-        "type": "ROUTER",
-        "status": "AVAILABLE",
-        "serialPort": "/dev/netlab_Layer3",
-        "baudRate": 9600
-      },
-      {
         "id": "router1-a",
         "name": "Router1-A",
         "type": "ROUTER",
@@ -54,14 +46,6 @@
     "status": "AVAILABLE",
     "devices": [
       {
-        "id": "layer3-b",
-        "name": "Layer3",
-        "type": "ROUTER",
-        "status": "AVAILABLE",
-        "serialPort": "/dev/netlab_Layer3",
-        "baudRate": 9600
-      },
-      {
         "id": "router1-b",
         "name": "Router1-B",
         "type": "ROUTER",
@@ -101,14 +85,6 @@
     "set": 3,
     "status": "AVAILABLE",
     "devices": [
-      {
-        "id": "layer3-c",
-        "name": "Layer3",
-        "type": "ROUTER",
-        "status": "AVAILABLE",
-        "serialPort": "/dev/netlab_Layer3",
-        "baudRate": 9600
-      },
       {
         "id": "router1-c",
         "name": "Router1-C",
