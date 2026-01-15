@@ -10,6 +10,7 @@ export const ThemeToggle = () => {
       onClick={toggleTheme}
       className="p-2 rounded-lg bg-bg-surface text-text-primary hover:bg-bg-surface-hover hover:text-brand-primary transition-all border border-border-subtle shadow-sm"
       title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
       {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
     </button>

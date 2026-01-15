@@ -1,14 +1,22 @@
-import type { User } from './auth';
+
 
 export type DeviceType = 'ROUTER' | 'SWITCH' | 'PC';
 export type DeviceStatus = 'AVAILABLE' | 'UNAVAILABLE';
+
+
+export interface ConnectedUser {
+  id: string;
+  name: string;
+}
 
 export interface Device {
   id: string;
   name: string; // e.g., R1, SW1
   type: DeviceType;
   status: DeviceStatus;
-  connectedUsers?: User[];
+  connectedUsers?: ConnectedUser[];
+  serialPort?: string; // e.g., /dev/netlab_router1
+  baudRate?: number;   // e.g., 9600
 }
 
 export interface Lab {

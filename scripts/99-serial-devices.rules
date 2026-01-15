@@ -1,0 +1,40 @@
+# Serial Port Device Naming Rules for KMITL-NetLab
+# สร้าง symlinks ที่มีชื่อคงที่ตาม USB Hub port location
+# ติดตั้ง: sudo cp 99-serial-devices.rules /etc/udev/rules.d/
+# Apply: sudo udevadm control --reload-rules && sudo udevadm trigger
+
+# USB Hub Port 1 - Router 1
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.1:*", SYMLINK+="netlab_router1", MODE="0666"
+
+# USB Hub Port 2 - Router 2
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.2:*", SYMLINK+="netlab_router2", MODE="0666"
+
+# USB Hub Port 3 - Switch 1
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.3:*", SYMLINK+="netlab_switch1", MODE="0666"
+
+# USB Hub Port 4 - Switch 2
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.4:*", SYMLINK+="netlab_switch2", MODE="0666"
+
+# USB Hub Port 5 - Switch 3
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.5:*", SYMLINK+="netlab_switch3", MODE="0666"
+
+# USB Hub Port 6 - Switch 4
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.6:*", SYMLINK+="netlab_switch4", MODE="0666"
+
+# USB Hub Port 7 - Device 7
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.7:*", SYMLINK+="netlab_device7", MODE="0666"
+
+# USB Hub Port 8 - Device 8
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-1.8:*", SYMLINK+="netlab_device8", MODE="0666"
+
+# USB Hub Port 9 - Device 9
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-2.1:*", SYMLINK+="netlab_device9", MODE="0666"
+
+# USB Hub Port 10 - Device 10
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-2.2:*", SYMLINK+="netlab_device10", MODE="0666"
+
+# USB Hub Port 11 - Device 11
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-2.3:*", SYMLINK+="netlab_device11", MODE="0666"
+
+# USB Hub Port 12 - Device 12
+SUBSYSTEM=="tty", ENV{ID_PATH}=="*-2.4:*", SYMLINK+="netlab_device12", MODE="0666"

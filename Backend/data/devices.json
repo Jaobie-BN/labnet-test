@@ -1,0 +1,88 @@
+{
+  "devices": [
+    {
+      "id": "router1",
+      "name": "Router-1",
+      "type": "ROUTER",
+      "serialPort": "/dev/netlab_router1",
+      "baudRate": 9600
+    },
+    {
+      "id": "router2",
+      "name": "Router-2",
+      "type": "ROUTER",
+      "serialPort": "/dev/netlab_router2",
+      "baudRate": 9600
+    },
+    {
+      "id": "switch1",
+      "name": "Switch-1",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_switch1",
+      "baudRate": 9600
+    },
+    {
+      "id": "switch2",
+      "name": "Switch-2",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_switch2",
+      "baudRate": 9600
+    },
+    {
+      "id": "switch3",
+      "name": "Switch-3",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_switch3",
+      "baudRate": 9600
+    },
+    {
+      "id": "switch4",
+      "name": "Switch-4",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_switch4",
+      "baudRate": 9600
+    },
+    {
+      "id": "device7",
+      "name": "Device-7",
+      "type": "ROUTER",
+      "serialPort": "/dev/netlab_device7",
+      "baudRate": 9600
+    },
+    {
+      "id": "device8",
+      "name": "Device-8",
+      "type": "ROUTER",
+      "serialPort": "/dev/netlab_device8",
+      "baudRate": 9600
+    },
+    {
+      "id": "device9",
+      "name": "Device-9",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_device9",
+      "baudRate": 9600
+    },
+    {
+      "id": "device10",
+      "name": "Device-10",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_device10",
+      "baudRate": 9600
+    },
+    {
+      "id": "device11",
+      "name": "Device-11",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_device11",
+      "baudRate": 9600
+    },
+    {
+      "id": "device12",
+      "name": "Device-12",
+      "type": "SWITCH",
+      "serialPort": "/dev/netlab_device12",
+      "baudRate": 9600
+    }
+  ]
+}

@@ -10,9 +10,11 @@ import {
   Monitor,
   ArrowRightLeft,
   Router,
-  Terminal as TerminalIcon
+  Terminal as TerminalIcon,
+  LogOut,
+  AlertTriangle
 } from 'lucide-react';
-import type { Device, Lab } from '../types';
+import type { Lab } from '../types';
 import { getLabById } from '../services/labService';
 import Terminal from '../components/Terminal';
 import PCConfiguration from '../components/PCConfiguration';
@@ -21,9 +23,14 @@ import { ThemeToggle } from '../components/ThemeToggle';
 const LabUsage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [selectedDevice, setSelectedDevice] = useState<Device | null>(null);
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
   const [lab, setLab] = useState<Lab | null>(null);
+  
+  // Derive selected device from lab data to ensure it stays in sync with updates
+  const selectedDevice = lab?.devices.find(d => d.id === selectedDeviceId) || null;
+
   const [loading, setLoading] = useState(true);
+  const [showLeaveDialog, setShowLeaveDialog] = useState(false);
 
   useEffect(() => {
     const fetchLab = async () => {
@@ -40,6 +47,75 @@ const LabUsage = () => {
     };
     fetchLab();
   }, [id]);
+
+  // WebSocket for Presence
+  useEffect(() => {
+    if (!id) return;
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:3000/ws/terminal';
+    const ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => {
+      // Join the lab channel
+      ws.send(JSON.stringify({
+        type: 'join',
+        labId: id,
+        userId: user.id || 'anonymous',
+        username: user.name || 'Anonymous'
+      }));
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        if (message.type === 'presence_update' && message.users) {
+          console.log('[LabUsage] Presence Update:', message.users); // [DEBUG]
+          
+          interface ConnectedUser {
+            userId: string;
+            username: string;
+            deviceId: string;
+          }
+
+          const connectedUsers = message.users as ConnectedUser[];
+
+          setLab(prevLab => {
+            if (!prevLab) return null;
+            
+            // Map users to devices
+            const updatedDevices = prevLab.devices.map(device => {
+              // Find users connected to this device
+              const deviceUsers = connectedUsers
+                .filter(u => String(u.deviceId) === String(device.id))
+                .map(u => ({ id: u.userId, name: u.username }));
+              
+              if (deviceUsers.length > 0) {
+                 console.log(`[LabUsage] Device ${device.id} has users:`, deviceUsers);
+              }
+
+              return {
+                ...device,
+                connectedUsers: deviceUsers
+              };
+            });
+
+            return {
+              ...prevLab,
+              devices: updatedDevices
+            };
+          });
+        }
+      } catch (error) {
+        console.error('Failed to parse presence message:', error);
+      }
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [id]); // Only depend on ID changes
+
 
   if (loading) {
     return (
@@ -116,7 +192,7 @@ const LabUsage = () => {
                   {lab.devices.map(device => (
                      <button 
                        key={device.id} 
-                       onClick={() => setSelectedDevice(device)}
+                       onClick={() => setSelectedDeviceId(device.id)}
                        className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-all group ${
                          selectedDevice?.id === device.id 
                            ? 'bg-brand-primary/20 border-brand-primary/50 shadow-lg shadow-indigo-900/20' 
@@ -155,11 +231,55 @@ const LabUsage = () => {
         </div>
 
         <div className="p-4 border-t border-border-subtle bg-bg-app/50">
-           <button className="w-full py-2 bg-status-error/10 hover:bg-status-error/20 text-status-error border border-status-error/20 rounded-lg text-sm font-medium transition-colors">
-              Terminate Session
+           <button 
+             onClick={() => setShowLeaveDialog(true)}
+             className="w-full py-2.5 flex items-center justify-center gap-2 bg-status-error/10 hover:bg-status-error/20 text-status-error border border-status-error/20 rounded-lg text-sm font-medium transition-colors"
+           >
+              <LogOut className="w-4 h-4" />
+              Leave Lab
            </button>
         </div>
       </aside>
+
+      {/* Leave Lab Confirmation Dialog */}
+      {showLeaveDialog && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-bg-surface border border-border-subtle rounded-2xl shadow-2xl p-6 max-w-md w-full mx-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-3 bg-status-error/10 rounded-full">
+                <AlertTriangle className="w-6 h-6 text-status-error" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-text-primary">Leave Lab?</h3>
+                <p className="text-sm text-text-secondary">This will end your session</p>
+              </div>
+            </div>
+            
+            <p className="text-text-secondary text-sm mb-6">
+              Are you sure you want to leave <span className="font-semibold text-text-primary">{lab?.name}</span>? 
+              All unsaved configurations will be lost and the lab will be released for other users.
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLeaveDialog(false)}
+                className="flex-1 py-2.5 px-4 bg-bg-app hover:bg-bg-surface-hover border border-border-subtle rounded-lg text-sm font-medium text-text-primary transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setShowLeaveDialog(false);
+                  navigate('/');
+                }}
+                className="flex-1 py-2.5 px-4 bg-status-error hover:bg-red-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Leave Lab
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 bg-bg-app">
@@ -204,10 +324,10 @@ const LabUsage = () => {
             </div>
             <div className="flex items-center gap-2">
                <ThemeToggle />
-               <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-bg-surface-hover rounded-lg transition-colors">
+               <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-bg-surface-hover rounded-lg transition-colors" aria-label="Save configuration">
                   <Save className="w-4 h-4" />
                </button>
-               <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-bg-surface-hover rounded-lg transition-colors">
+               <button className="p-2 text-text-secondary hover:text-text-primary hover:bg-bg-surface-hover rounded-lg transition-colors" aria-label="Refresh">
                   <RefreshCw className="w-4 h-4" />
                </button>
             </div>
@@ -218,7 +338,7 @@ const LabUsage = () => {
                selectedDevice.type === 'PC' ? (
                  <PCConfiguration key={selectedDevice.id} device={selectedDevice} />
                ) : (
-                 <Terminal key={selectedDevice.id} device={selectedDevice} />
+                 <Terminal key={selectedDevice.id} device={selectedDevice} labId={lab.id} />
                )
             ) : (
                <div className="flex-1 p-8 flex items-center justify-center relative">

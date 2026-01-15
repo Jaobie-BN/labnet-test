@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { findUserByEmail, User } from '../services/userService';
 import { authenticateWithLdap } from '../services/ldapService';
+import { generateToken } from '../utils/jwt';
 
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -20,7 +21,7 @@ export const login = async (req: Request, res: Response) => {
            const name = localUser?.name || ldapUser.cn || email.split('@')[0];
            const id = localUser?.id || 'ldap-' + Date.now();
 
-           const token = 'mock-jwt-token-ldap-' + Date.now(); // Replace with real JWT signing later
+           const token = generateToken({ id, email, name, role });
 
            return res.status(200).json({
              success: true,
@@ -46,8 +47,8 @@ export const login = async (req: Request, res: Response) => {
     const user = findUserByEmail(email);
 
     if (user && user.password === password) {
-        const token = 'mock-jwt-token-' + Date.now();
         const { password, ...userWithoutPassword } = user;
+        const token = generateToken({ ...userWithoutPassword });
         
         return res.status(200).json({
         success: true,

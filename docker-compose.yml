@@ -1,21 +1,14 @@
 services:
-  backend:
-    build: ./Backend
-    container_name: networklab-backend
-    ports:
-      - "3000:3000"
-    environment:
-      - PORT=3000
-      - NODE_ENV=production
-    volumes:
-      - ./Backend/data:/app/data
-    restart: unless-stopped
-
   frontend:
     build: ./Frontend
     container_name: networklab-frontend
     ports:
       - "80:80"
-    depends_on:
-      - backend
+    # Use extra_hosts to allow container to reach host machine
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped
+
+# Backend runs NATIVE on Raspberry Pi (not in Docker)
+# This allows direct access to serial ports for device communication
+# Run backend with: cd Backend && npm start

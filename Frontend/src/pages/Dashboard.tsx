@@ -98,6 +98,7 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
                 onClick={onLogout}
                 className="p-2 rounded-lg bg-bg-surface hover:bg-red-500/10 hover:text-status-error text-text-secondary transition-all border border-transparent hover:border-red-500/20 shadow-sm"
                 title="Logout"
+                aria-label="Logout"
               >
                 <LogOut className="w-5 h-5" />
               </button>
