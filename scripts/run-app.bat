@@ -4,6 +4,9 @@ echo   KMITL-NetLab Application Launcher (Windows)
 echo ========================================================
 echo.
 
+:: Ensure we are in the project root
+cd /d "%~dp0.."
+
 echo [1/2] Starting Frontend (Docker)...
 docker compose up -d frontend
 if %errorlevel% neq 0 (

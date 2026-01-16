@@ -4,6 +4,9 @@ echo   KMITL-NetLab Background Launcher (Windows)
 echo ========================================================
 echo.
 
+:: Ensure we are in the project root
+cd /d "%~dp0.."
+
 echo [1/3] Checking requirements...
 call pm2 --version >nul 2>&1
 if %errorlevel% neq 0 (

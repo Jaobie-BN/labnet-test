@@ -16,9 +16,8 @@ export const getDashboardStats = (req: Request, res: Response) => {
 export const getUsers = (req: Request, res: Response) => {
   try {
     const users = getAllUsers();
-    // Filter out passwords
-    const safeUsers = users.map(({ password, ...rest }) => rest);
-    res.json(safeUsers);
+    // getAllUsers already returns users without passwords
+    res.json(users);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching users' });
   }
