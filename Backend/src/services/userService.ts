@@ -24,3 +24,32 @@ export const findUserByEmail = (email: string): User | undefined => {
     return undefined;
   }
 };
+
+export const getAllUsers = (): User[] => {
+  try {
+    const fileData = fs.readFileSync(DATA_PATH, 'utf-8');
+    return JSON.parse(fileData);
+  } catch (error) {
+    console.error('Error reading users file:', error);
+    return [];
+  }
+};
+
+export const deleteUser = (id: string): boolean => {
+  try {
+    const users = getAllUsers();
+    // Prevent deleting the main admin if wanted, but for now just simple delete
+    const updatedUsers = users.filter((u) => u.id !== id);
+    
+    if (users.length === updatedUsers.length) {
+        return false; // User not found
+    }
+
+    fs.writeFileSync(DATA_PATH, JSON.stringify(updatedUsers, null, 2));
+    return true;
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return false;
+  }
+};
+

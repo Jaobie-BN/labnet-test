@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import AdminDashboard from './pages/Admin/Dashboard';
+import UserManagement from './pages/Admin/UserManagement';
 import LabUsage from './pages/LabUsage';
 import type { User } from './types';
 import { ThemeProvider } from './context/ThemeContext';
@@ -82,6 +84,26 @@ function AppContent() {
               <LabUsage />
             ) : (
               <Navigate to="/login" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            isAuthenticated && user?.role === 'admin' ? (
+              <AdminDashboard />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/admin/users" 
+          element={
+            isAuthenticated && user?.role === 'admin' ? (
+              <UserManagement />
+            ) : (
+              <Navigate to="/" replace />
             )
           } 
         />

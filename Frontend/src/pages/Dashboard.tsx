@@ -83,6 +83,14 @@ const Dashboard = ({ user, onLogout }: DashboardProps) => {
                 <LayoutDashboard className="w-4 h-4" /> Dashboard
               </a>
 
+              {user.role === 'admin' && (
+                <div className="flex items-center gap-8 border-l border-border-subtle pl-8 ml-2">
+                  <a href="/admin/dashboard" className="flex items-center gap-2 text-text-secondary hover:text-brand-secondary transition-colors">
+                    <Monitor className="w-4 h-4" /> Admin
+                  </a>
+                </div>
+              )}
+
               <a href="#" className="flex items-center gap-2 text-text-secondary hover:text-text-primary transition-colors">
                 <FileText className="w-4 h-4" /> Documents
               </a>

@@ -39,6 +39,17 @@ export const getAllLabs = (): Lab[] => {
   }
 };
 
+export const saveLabs = (labs: Lab[]): boolean => {
+  try {
+    fs.writeFileSync(DATA_PATH, JSON.stringify(labs, null, 2));
+    return true;
+  } catch (error) {
+    console.error('Error writing labs database:', error);
+    return false;
+  }
+};
+
+
 export const getLabById = (id: string): Lab | undefined => {
   const labs = getAllLabs();
   return labs.find(lab => lab.id === id);
@@ -56,3 +67,23 @@ export const getSystemStats = (): SystemStats => {
     unavailableLabs
   };
 };
+
+export const forceReleaseLab = (labId: string): boolean => {
+  const labs = getAllLabs();
+  const labIndex = labs.findIndex(l => l.id === labId);
+
+  if (labIndex === -1) return false;
+
+  // Reset Lab Status
+  labs[labIndex].status = 'AVAILABLE';
+  
+  // Reset All Devices in Lab
+  labs[labIndex].devices = labs[labIndex].devices.map(d => ({
+    ...d,
+    status: 'AVAILABLE',
+    connectedUsers: []
+  }));
+
+  return saveLabs(labs);
+};
+
