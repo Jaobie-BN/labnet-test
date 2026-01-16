@@ -38,7 +38,7 @@ export const login = async (req: Request, res: Response) => {
         console.error('LDAP Auth Failed:', error);
         return res.status(401).json({
             success: false,
-            message: 'LDAP Authentication failed'
+            message: 'Invalid email or password'
         });
       }
     }
