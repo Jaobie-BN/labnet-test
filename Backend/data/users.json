@@ -11,6 +11,6 @@
     "email": "student@gmail.com",
     "password": "password123",
     "name": "Student User",
-    "role": "student"
+    "role": "user"
   }
 ]

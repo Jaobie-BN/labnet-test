@@ -17,7 +17,7 @@ export const login = async (req: Request, res: Response) => {
            const localUser = findUserByEmail(email);
            
            // Default role if not in local DB
-           const role = localUser?.role || 'student';
+           const role = localUser?.role || 'user';
            const name = localUser?.name || ldapUser.cn || email.split('@')[0];
            const id = localUser?.id || 'ldap-' + Date.now();
 
